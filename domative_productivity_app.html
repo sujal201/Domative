@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domative — Dominate Your Every Day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#F0A500;--gold-light:#FFF3CC;--gold-dark:#C47A00;--ink:#1A1A2E;--cream:#FDFAF4;--muted:#6B6B80;--success:#22C55E;--danger:#EF4444;--warn:#F59E0B;--border:rgba(0,0,0,0.08);--radius:16px;--shadow:0 4px 24px rgba(0,0,0,0.08)}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
+#app{max-width:480px;margin:0 auto}
+.screen{display:none;animation:fadeIn 0.4s ease}.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* SPLASH */
+#splash{min-height:100vh;background:linear-gradient(145deg,#1A1A2E 0%,#16213E 50%,#0F3460 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;overflow:hidden}
+#splash::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(240,165,0,0.18) 0%,transparent 70%)}
+#splash::after{content:'';position:absolute;bottom:-80px;left:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(240,165,0,0.10) 0%,transparent 70%)}
+.splash-logo{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:4px}
+.splash-logo span{color:var(--gold)}
+.splash-tagline{font-size:13px;color:rgba(255,255,255,0.5);letter-spacing:3px;text-transform:uppercase;margin-bottom:36px}
+.splash-ring{width:110px;height:110px;border-radius:50%;border:3px solid rgba(240,165,0,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 32px;font-size:46px;position:relative}
+.splash-ring::before{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(240,165,0,0.15)}
+.splash-quote{max-width:300px;font-size:14px;color:rgba(255,255,255,0.75);font-style:italic;line-height:1.7;margin-bottom:6px}
+.splash-author{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:36px}
+.btn-start{background:var(--gold);color:var(--ink);border:none;padding:14px 44px;border-radius:50px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-start:hover{background:#FFB800;transform:translateY(-2px)}
+
+/* MAIN */
+#main{background:var(--cream);min-height:100vh;padding-bottom:80px}
+.app-header{background:linear-gradient(135deg,#1A1A2E,#0F3460);padding:20px 20px 60px;position:relative;overflow:hidden}
+.app-header::after{content:'';position:absolute;bottom:-30px;left:0;right:0;height:60px;background:var(--cream);border-radius:30px 30px 0 0}
+.header-top{display:flex;justify-content:space-between;align-items:center}
+.app-brand{font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:2px}
+.hgreeting{font-size:13px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:2px}
+.hname{font-family:'Playfair Display',serif;font-size:24px;color:#fff;font-weight:700}
+.notif-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.12);border:none;cursor:pointer;font-size:18px;position:relative;display:flex;align-items:center;justify-content:center}
+.ndot{position:absolute;top:8px;right:8px;width:8px;height:8px;background:var(--gold);border-radius:50%;border:2px solid #1A1A2E}
+.prog-section{padding:0 20px;position:relative;z-index:1;margin-top:-20px}
+.prog-card{background:white;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);display:flex;align-items:center;gap:20px}
+.ring-wrap{position:relative;width:90px;height:90px;flex-shrink:0}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-pct{font-size:20px;font-weight:700;color:var(--ink)}
+.ring-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.prog-info{flex:1;text-align:left}
+.prog-title{font-size:17px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.prog-sub{font-size:13px;color:var(--muted);margin-bottom:12px}
+.pbar{height:6px;background:#F0EDE8;border-radius:3px;overflow:hidden}
+.pfill{height:100%;background:var(--gold);border-radius:3px;transition:width 0.6s ease}
+.section{padding:20px 20px 0}
+.sec-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.sec-title{font-size:15px;font-weight:600;color:var(--ink);text-transform:uppercase;letter-spacing:1px}
+.sec-link{font-size:13px;color:var(--gold-dark);font-weight:500;cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif}
+.qcard{background:linear-gradient(135deg,#1A1A2E,#0F3460);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden}
+.qcard::before{content:'"';position:absolute;top:-10px;left:12px;font-size:80px;color:var(--gold);opacity:0.3;font-family:'Playfair Display',serif;line-height:1}
+.qtext{font-size:14px;color:rgba(255,255,255,0.9);line-height:1.7;font-style:italic;margin-bottom:10px;padding-top:8px}
+.qauthor{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.qnav{display:flex;gap:8px;margin-top:10px}
+.qbtn{background:rgba(255,255,255,0.15);border:none;color:white;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:13px;transition:background 0.2s}
+.qbtn:hover{background:rgba(255,255,255,0.25)}
+.task-item{background:white;border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.05);cursor:pointer;transition:all 0.2s;border-left:3px solid transparent}
+.task-item:hover{transform:translateX(2px);box-shadow:0 4px 12px rgba(0,0,0,0.10)}
+.task-item.done{opacity:0.6;border-left-color:var(--success)}
+.task-item.high-p{border-left-color:var(--danger)}
+.task-item.med-p{border-left-color:var(--warn)}
+.tcheck{width:22px;height:22px;border-radius:50%;border:2px solid #DDD;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;transition:all 0.2s}
+.task-item.done .tcheck{background:var(--success);border-color:var(--success);color:white}
+.tinfo{flex:1}
+.tname{font-size:14px;font-weight:500;color:var(--ink)}
+.task-item.done .tname{text-decoration:line-through;color:var(--muted)}
+.tmeta{font-size:12px;color:var(--muted);margin-top:2px}
+.badge{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600;letter-spacing:0.5px}
+.bh{background:#FEE2E2;color:#DC2626}.bm{background:#FEF3C7;color:#D97706}.bl{background:#DCFCE7;color:#16A34A}
+.rem-card{background:white;border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.05);border-left:3px solid var(--gold)}
+.rem-icon{font-size:22px;flex-shrink:0}
+.rem-text{font-size:13px;font-weight:500;color:var(--ink)}
+.rem-time{font-size:12px;color:var(--muted);margin-top:2px}
+.rem-x{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:4px}
+.add-bar{display:flex;gap:8px;margin-top:4px}
+.add-inp{flex:1;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--ink);background:white;font-family:'DM Sans',sans-serif;outline:none}
+.add-inp:focus{border-color:var(--gold)}
+.add-btn{background:var(--gold);border:none;color:var(--ink);padding:11px 18px;border-radius:10px;font-size:20px;cursor:pointer;font-weight:700;transition:all 0.2s}
+.add-btn:hover{background:#FFB800}
+.pri-sel{padding:11px 8px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;background:white;color:var(--ink);outline:none}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--ink);color:white;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:500;z-index:999;transition:transform 0.4s ease;display:flex;align-items:center;gap:10px;white-space:nowrap;max-width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.25)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:white;border-top:1px solid var(--border);display:flex;padding:8px 0 12px;z-index:100;box-shadow:0 -4px 20px rgba(0,0,0,0.08)}
+.nbtn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;padding:6px 0;font-family:'DM Sans',sans-serif}
+.ni{font-size:20px}.nl{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:0.5px;text-transform:uppercase}
+.nbtn.active .nl{color:var(--gold-dark)}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat-card{background:white;border-radius:12px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.05);text-align:center}
+.stat-val{font-size:28px;font-weight:700;color:var(--ink);font-family:'Playfair Display',serif}
+.stat-lbl{font-size:12px;color:var(--muted);margin-top:4px}
+#npanel{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-100%);width:100%;max-width:480px;background:white;z-index:500;border-radius:0 0 20px 20px;padding:20px;box-shadow:var(--shadow);transition:transform 0.4s ease}
+#npanel.open{transform:translateX(-50%) translateY(0)}
+.nph{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.npt{font-size:16px;font-weight:600}
+.xbtn{background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted)}
+.ni2{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.ni2:last-child{border-bottom:none}
+.nico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ng{background:var(--gold-light)}.ngg{background:#DCFCE7}
+.nb{flex:1}.nt{font-size:13px;font-weight:500;color:var(--ink)}.ntime{font-size:11px;color:var(--muted);margin-top:2px}
+</style>
+</head>
+<body>
+<div id="app">
+<div class="toast" id="toast"><span id="ticon">🔔</span><span id="tmsg">Hi</span></div>
+<div id="npanel">
+  <div class="nph"><span class="npt">Notifications</span><button class="xbtn" onclick="closeN()">✕</button></div>
+  <div id="nlist"></div>
+</div>
+
+<!-- SPLASH -->
+<div class="screen active" id="splash">
+  <div class="splash-ring">⚡</div>
+  <div class="splash-logo">Doma<span>tive</span></div>
+  <div class="splash-tagline">Dominate Your Every Day</div>
+  <div class="splash-quote" id="sq">Every day is a new chance to dominate your goals.</div>
+  <div class="splash-author" id="sa">— Unknown</div>
+  <button class="btn-start" onclick="go()">Start My Day ↗</button>
+</div>
+
+<!-- MAIN APP -->
+<div class="screen" id="main">
+  <div class="app-header">
+    <div class="header-top">
+      <div>
+        <div class="app-brand">Domative</div>
+        <div class="hgreeting" id="greet">Good Morning</div>
+        <div class="hname">Champion 🔥</div>
+      </div>
+      <button class="notif-btn" onclick="openN()">🔔<div class="ndot" id="ndot"></div></button>
+    </div>
+  </div>
+
+  <div class="prog-section">
+    <div class="prog-card">
+      <div class="ring-wrap">
+        <svg width="90" height="90" viewBox="0 0 90 90">
+          <circle cx="45" cy="45" r="38" fill="none" stroke="#F0EDE8" stroke-width="8"/>
+          <circle cx="45" cy="45" r="38" fill="none" stroke="#F0A500" stroke-width="8" stroke-linecap="round" stroke-dasharray="238.76" id="rarc" stroke-dashoffset="238.76"/>
+        </svg>
+        <div class="ring-center"><div class="ring-pct" id="rpct">0%</div><div class="ring-lbl">Done</div></div>
+      </div>
+      <div class="prog-info">
+        <div class="prog-title">Daily Progress</div>
+        <div class="prog-sub" id="psub">0 of 0 tasks completed</div>
+        <div class="pbar"><div class="pfill" id="pfill" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-hd"><span class="sec-title">Daily Spark</span><button class="sec-link" onclick="nq()">New Quote</button></div>
+    <div class="qcard">
+      <div class="qtext" id="qt">Believe you can and you're halfway there.</div>
+      <div class="qauthor" id="qa">— Theodore Roosevelt</div>
+      <div class="qnav"><button class="qbtn" onclick="pq()">←</button><button class="qbtn" onclick="nq()">→</button></div>
+    </div>
+  </div>
+
+  <div class="section" id="remsec">
+    <div class="sec-hd"><span class="sec-title">⏰ Reminders</span></div>
+    <div id="remlist"></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-hd"><span class="sec-title">Add Task</span></div>
+    <div class="add-bar">
+      <input class="add-inp" id="tinp" placeholder="What will you dominate today?" />
+      <select class="pri-sel" id="psel"><option value="high">🔴 High</option><option value="med" selected>🟡 Med</option><option value="low">🟢 Low</option></select>
+      <button class="add-btn" onclick="addT()">+</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-hd"><span class="sec-title">Today's Tasks</span><button class="sec-link" onclick="clrDone()">Clear Done</button></div>
+    <div id="tlist"></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-hd"><span class="sec-title">Your Stats</span></div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-val" id="sdone">0</div><div class="stat-lbl">Completed Today</div></div>
+      <div class="stat-card"><div class="stat-val" id="spend">0</div><div class="stat-lbl">Pending Tasks</div></div>
+      <div class="stat-card"><div class="stat-val">🔥 3</div><div class="stat-lbl">Day Streak</div></div>
+      <div class="stat-card"><div class="stat-val" id="sscore">A+</div><div class="stat-lbl">Focus Score</div></div>
+    </div>
+  </div>
+
+  <div style="height:100px"></div>
+  <div class="bnav">
+    <button class="nbtn active"><div class="ni">🏠</div><div class="nl">Home</div></button>
+    <button class="nbtn" onclick="document.getElementById('tlist').scrollIntoView({behavior:'smooth'})"><div class="ni">✅</div><div class="nl">Tasks</div></button>
+    <button class="nbtn" onclick="document.getElementById('remsec').scrollIntoView({behavior:'smooth'})"><div class="ni">⏰</div><div class="nl">Remind</div></button>
+    <button class="nbtn" onclick="document.getElementById('sdone').closest('.stats-grid').scrollIntoView({behavior:'smooth'})"><div class="ni">📊</div><div class="nl">Stats</div></button>
+  </div>
+</div>
+</div>
+
+<script>
+const quotes=[{text:"Believe you can and you're halfway there.",author:"Theodore Roosevelt"},{text:"The secret of getting ahead is getting started.",author:"Mark Twain"},{text:"It always seems impossible until it's done.",author:"Nelson Mandela"},{text:"Don't watch the clock; do what it does. Keep going.",author:"Sam Levenson"},{text:"The way to get started is to quit talking and begin doing.",author:"Walt Disney"},{text:"Success is not final; failure is not fatal. It's the courage to continue that counts.",author:"Winston Churchill"},{text:"You are braver than you believe, stronger than you seem, smarter than you think.",author:"A.A. Milne"},{text:"Push yourself, because no one else is going to do it for you.",author:"Unknown"},{text:"Great things never come from comfort zones.",author:"Neil Strauss"},{text:"Dream it. Wish it. Do it.",author:"Unknown"}];
+const splashQ=[{text:"Every day is a new chance to dominate your goals.",author:"Unknown"},{text:"The secret of getting ahead is getting started.",author:"Mark Twain"},{text:"Rise up and attack the day with enthusiasm.",author:"Unknown"}];
+let qi=0;
+const sq=splashQ[Math.floor(Math.random()*splashQ.length)];
+document.getElementById('sq').textContent=sq.text;
+document.getElementById('sa').textContent='— '+sq.author;
+
+let tasks=[{id:1,name:"Morning workout — 30 minutes",done:false,priority:"high",time:"07:00 AM"},{id:2,name:"Review project proposal",done:false,priority:"high",time:"09:30 AM"},{id:3,name:"Reply to important emails",done:true,priority:"med",time:"10:00 AM"},{id:4,name:"Read for 20 minutes",done:false,priority:"low",time:"12:00 PM"},{id:5,name:"Team standup meeting",done:false,priority:"med",time:"02:00 PM"}];
+let rems=[{id:1,icon:"💪",text:"Time to crush your workout!",time:"07:00 AM"},{id:2,icon:"📋",text:"Project proposal deadline approaching",time:"09:00 AM"},{id:3,icon:"🧘",text:"Take a 5-min mindfulness break",time:"03:00 PM"}];
+let notifs=[{icon:"⚡",text:"Welcome to Domative! Own your day!",time:"Just now",type:"g"},{icon:"⏰",text:"Reminder: Team standup in 30 minutes",time:"1h ago",type:"g"},{icon:"🎯",text:"You're 60% done — keep dominating!",time:"2h ago",type:"gg"},{icon:"🔥",text:"3-day streak! You're unstoppable!",time:"Yesterday",type:"g"}];
+
+function go(){
+  document.getElementById('splash').classList.remove('active');
+  document.getElementById('main').classList.add('active');
+  setGreet();upd();rT();rR();rN();
+  setTimeout(()=>toast("⚡","Welcome to Domative! Own your day!"),800);
+  setTimeout(()=>toast("⏰","Reminder: Morning workout at 07:00 AM"),4000);
+}
+function setGreet(){const h=new Date().getHours();document.getElementById('greet').textContent=h<12?'Good Morning':h<17?'Good Afternoon':'Good Evening';}
+function nq(){qi=(qi+1)%quotes.length;uq();}function pq(){qi=(qi-1+quotes.length)%quotes.length;uq();}
+function uq(){document.getElementById('qt').textContent=quotes[qi].text;document.getElementById('qa').textContent='— '+quotes[qi].author;}
+function upd(){
+  const tot=tasks.length,done=tasks.filter(t=>t.done).length;
+  const pct=tot===0?0:Math.round(done/tot*100);
+  const c=238.76;document.getElementById('rarc').setAttribute('stroke-dashoffset',c-c*pct/100);
+  document.getElementById('rpct').textContent=pct+'%';
+  document.getElementById('psub').textContent=done+' of '+tot+' tasks completed';
+  document.getElementById('pfill').style.width=pct+'%';
+  document.getElementById('sdone').textContent=done;
+  document.getElementById('spend').textContent=tot-done;
+  document.getElementById('sscore').textContent=pct>=80?'A+':pct>=60?'A':pct>=40?'B':pct>=20?'C':'D';
+}
+function rT(){
+  const el=document.getElementById('tlist');
+  if(!tasks.length){el.innerHTML='<div style="text-align:center;padding:24px;color:var(--muted);font-size:14px;">No tasks yet. Add one above! 🚀</div>';return;}
+  el.innerHTML=tasks.map(t=>`<div class="task-item ${t.done?'done':''} ${!t.done&&t.priority==='high'?'high-p':''} ${!t.done&&t.priority==='med'?'med-p':''}" onclick="tog(${t.id})"><div class="tcheck">${t.done?'✓':''}</div><div class="tinfo"><div class="tname">${t.name}</div><div class="tmeta">⏰ ${t.time}</div></div><span class="badge ${t.priority==='high'?'bh':t.priority==='med'?'bm':'bl'}">${t.priority.toUpperCase()}</span></div>`).join('');
+}
+function rR(){
+  const el=document.getElementById('remlist');
+  if(!rems.length){document.getElementById('remsec').style.display='none';return;}
+  document.getElementById('remsec').style.display='block';
+  el.innerHTML=rems.map(r=>`<div class="rem-card"><div class="rem-icon">${r.icon}</div><div style="flex:1"><div class="rem-text">${r.text}</div><div class="rem-time">${r.time}</div></div><button class="rem-x" onclick="dimR(${r.id})">✕</button></div>`).join('');
+}
+function rN(){document.getElementById('nlist').innerHTML=notifs.map(n=>`<div class="ni2"><div class="nico n${n.type}">${n.icon}</div><div class="nb"><div class="nt">${n.text}</div><div class="ntime">${n.time}</div></div></div>`).join('');}
+function dimR(id){rems=rems.filter(r=>r.id!==id);rR();toast("✅","Reminder dismissed");}
+function tog(id){const t=tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;rT();upd();
+  if(t.done){toast("🎉","Dominated: "+t.name.slice(0,32)+"!");
+    const d=tasks.filter(x=>x.done).length,p=Math.round(d/tasks.length*100);
+    if(p===100)setTimeout(()=>toast("🏆","All tasks dominated! Unstoppable!"),1500);
+    else if(p===50)setTimeout(()=>toast("🔥","Halfway there! Keep dominating!"),1500);
+    notifs.unshift({icon:"⚡",text:"Dominated: "+t.name.slice(0,40),time:"Just now",type:"g"});rN();
+  }else toast("↩️","Task unmarked");
+}
+function addT(){
+  const inp=document.getElementById('tinp'),pri=document.getElementById('psel').value,name=inp.value.trim();
+  if(!name){toast("⚠️","Please enter a task name");return;}
+  const now=new Date(),time=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  tasks.push({id:Date.now(),name,done:false,priority:pri,time});inp.value='';rT();upd();toast("✅","Task added: "+name.slice(0,28));
+}
+document.getElementById('tinp').addEventListener('keydown',e=>{if(e.key==='Enter')addT();});
+function clrDone(){const b=tasks.length;tasks=tasks.filter(t=>!t.done);if(tasks.length<b){rT();upd();toast("🧹","Completed tasks cleared!");}else toast("ℹ️","No completed tasks to clear");}
+let tt;function toast(icon,msg){clearTimeout(tt);document.getElementById('ticon').textContent=icon;document.getElementById('tmsg').textContent=msg;const el=document.getElementById('toast');el.classList.add('show');tt=setTimeout(()=>el.classList.remove('show'),3200);}
+function openN(){document.getElementById('npanel').classList.add('open');document.getElementById('ndot').style.display='none';}
+function closeN(){document.getElementById('npanel').classList.remove('open');}
+setInterval(()=>{const m=[["🌟","Domative tip: progress over perfection!"],["⏰","Time check — stay on track!"],["💡",quotes[Math.floor(Math.random()*quotes.length)].text.slice(0,50)+'...'],["🔥","You're dominating the day, keep going!"]];const x=m[Math.floor(Math.random()*m.length)];toast(x[0],x[1]);},25000);
+</script>
+</body>
+</html>
